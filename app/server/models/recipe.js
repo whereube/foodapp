@@ -27,6 +27,10 @@ export const recipe = db.define(
       video_link: {
         type: DataTypes.STRING,
         allowNull: true,
+      },
+      nr_of_people: {
+        type: DataTypes.INTEGER,
+        allowNull: true,
       }
     },
     {
