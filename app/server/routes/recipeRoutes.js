@@ -25,9 +25,8 @@ export const getRecipeRoutes = () => {
     }
   });
 
-  router.get('/getByRecipeId', async (req, res, next) => {
-    const { id } = req.body; 
-
+  router.get('/getByRecipeId/:id', async (req, res, next) => {
+    const id  = req.params.id; 
     const validate = validateInput({ id });
     if (validate.valid) {
       try {

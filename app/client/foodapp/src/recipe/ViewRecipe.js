@@ -1,23 +1,18 @@
 
 
 
-const ViewRecipe = () => {
+const ViewRecipe = (recipeId) => {
 
-    const getRecipe = async () =>{
-        const response = await fetch('http://localhost:443/recipe/getByRecipeId', {
-            method: "GET",
-            body: JSON.stringify({
-                id: ''
-            }),
-        })
+    const getRecipe = async (recipeId) =>{
+        const response = await fetch('http://localhost:443/recipe/getByRecipeId/' + recipeId)
         const data = await response.json()
         console.log(data)
     }
-    getRecipe();
+    getRecipe('40d708e7-b828-4749-a17e-4fa71ab44399');
 
     return (
         <>
-            <p>Test creator page3</p>
+            <p>View recipe</p>
         </>
     )
 }
