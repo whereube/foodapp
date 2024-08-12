@@ -109,6 +109,8 @@ export const getRecipeRoutes = () => {
   });
 
   router.post('/createRecipe', async (req, res, next) => {
+    res.append('Access-Control-Allow-Origin', ['*']);
+
     const {
       creator_id,
       title,
