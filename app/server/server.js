@@ -1,5 +1,5 @@
 import express from 'express';
-import { getRoutes } from './routes/recipeRoutes.js';
+import { getRecipeRoutes } from './routes/recipeRoutes.js';
 
 
 export const createServer = () => {
