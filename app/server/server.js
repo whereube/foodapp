@@ -1,5 +1,6 @@
 import express from 'express';
-import { getRoutes } from './routes/recipeRoutes.js';
+import { getRecipeRoutes } from './routes/recipeRoutes.js';
+import { getCreatorRoutes } from './routes/creatorRoutes.js';
 
 
 export const createServer = () => {
@@ -8,6 +9,7 @@ export const createServer = () => {
   app.use(express.json());
 //   app.use(authenticateUser);
   app.use('/recipe',  getRecipeRoutes());
+  app.use('/creator',  getCreatorRoutes());
 
   return app;
 };

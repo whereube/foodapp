@@ -13,7 +13,7 @@ export const creator = db.define(
         primaryKey: true,
       },
       username: {
-        type: DataTypes.UUID,
+        type: DataTypes.STRING,
         allowNull: false,
       },
       password: {
