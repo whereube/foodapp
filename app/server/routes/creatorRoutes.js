@@ -15,7 +15,6 @@ export const getCreatorRoutes = () => {
     router.get('/getAll', async (req, res, next) => {
         const allCreators = await object.creator.findAll({
         });
-        res.append('Access-Control-Allow-Origin', ['*']);
         res.status(200).send(allCreators);
     });
 
