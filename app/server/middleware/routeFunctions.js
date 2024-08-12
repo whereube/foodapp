@@ -19,9 +19,7 @@ export const validateInteger = (input) => {
   for (let key in input) {
     if (input.hasOwnProperty(key)) {
       let value = input[key];
-      if (!value) {
-        return { valid: false, message: `${key} cannot be empty`};
-      } else if (typeof value !== 'number' || !Number.isInteger(value)) {
+      if (typeof value !== 'number' || !Number.isInteger(value)) {
         return { valid: false, message: `${key} must be an integer` };
       }
     }
