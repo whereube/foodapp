@@ -6,7 +6,8 @@ const RecipeForm = () => {
     title: '',
     description: '',
     video_link: '',
-    nr_of_people: ''
+    nr_of_people: '', // Initially set to an empty string
+    creator_id: ''
   });
 
   // State for form submission status
@@ -15,9 +16,11 @@ const RecipeForm = () => {
   // Handle input change
   const handleChange = (e) => {
     const { name, value } = e.target;
+    // Convert nr_of_people to an integer if the field name matches
+    const newValue = name === 'nr_of_people' ? parseInt(value, 10) : value;
     setFormData((prevData) => ({
       ...prevData,
-      [name]: value
+      [name]: newValue
     }));
   };
 
@@ -25,13 +28,16 @@ const RecipeForm = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
+    // Log form data before sending it
+    console.log('Submitting form data:', formData);
+
     try {
       const response = await fetch('http://localhost:443/recipe/createRecipe', {
         method: 'POST',
         headers: {
-          'Content-Type': 'application/json'
+          'Content-Type': 'application/json' // Indicates that the body of the request contains JSON
         },
-        body: JSON.stringify(formData)
+        body: JSON.stringify(formData) // Convert formData to JSON string
       });
 
       if (!response.ok) {
@@ -45,7 +51,8 @@ const RecipeForm = () => {
         title: '',
         description: '',
         video_link: '',
-        nr_of_people: ''
+        nr_of_people: '', // Clear new field
+        creator_id: ''
       });
     } catch (error) {
       setStatus({ success: false, message: error.message });
@@ -56,6 +63,18 @@ const RecipeForm = () => {
     <div>
       <h1>Create Recipe</h1>
       <form onSubmit={handleSubmit}>
+        <div>
+          <label htmlFor="creator_id">Creator ID:</label>
+          <input
+            type="text"
+            id="creator_id"
+            name="creator_id"
+            value={formData.creator_id}
+            onChange={handleChange}
+            required
+          />
+        </div>
+
         <div>
           <label htmlFor="title">Title:</label>
           <input
@@ -97,6 +116,7 @@ const RecipeForm = () => {
             name="nr_of_people"
             value={formData.nr_of_people}
             onChange={handleChange}
+            min="0" // Optional: Ensures the number is non-negative
           />
         </div>
 
