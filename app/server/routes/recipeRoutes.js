@@ -3,7 +3,7 @@ import * as object from '../models/objectIndex.js';
 // import { v4 as uuidv4 } from 'uuid';
 
 
-export const getRoutes = () => {
+export const getRecipeRoutes = () => {
   const router = Router();
 
   router.get('/', async (req, res, next) => {
