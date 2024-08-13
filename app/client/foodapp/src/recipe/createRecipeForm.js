@@ -78,17 +78,11 @@ const RecipeForm = () => {
       return acc;
     }, {});
 
-    // Log steps dictionary before sending it
-    console.log('Steps dictionary:', stepsDict);
-
     // Prepare the form data with the steps as a dictionary
     const dataToSend = {
       ...formData,
       steps: stepsDict
     };
-
-    // Log the complete form data before sending it
-    console.log('Submitting form data:', dataToSend);
 
     try {
       const response = await fetch('http://localhost:443/recipe/createRecipe', {
@@ -120,118 +114,151 @@ const RecipeForm = () => {
   };
 
   return (
-    <div id="recipeForm">
-      <h1>Create Recipe</h1>
-      <form onSubmit={handleSubmit} className="recipeForm">
-        <div>
-          <label htmlFor="creator_id">Creator ID:</label>
-          <input class="input-fields"
-            type="text"
-            id="creator_id"
-            name="creator_id"
-            value={formData.creator_id}
-            onChange={handleChange}
-            required
-          />
-        </div>
-
-        <div>
-          <label htmlFor="title">Title:</label>
-          <input class="input-fields"
-            type="text"
-            id="title"
-            name="title"
-            value={formData.title}
-            onChange={handleChange}
-            required
-          />
-        </div>
-
-        <div>
-          <label htmlFor="description">Description:</label>
-          <textarea 
-            id="description"
-            name="description"
-            value={formData.description}
-            onChange={handleChange}
-          />
-        </div>
-
-        <div>
-          <label htmlFor="video_link">Video Link:</label>
-          <input class="input-fields"
-            type="text"
-            id="video_link"
-            name="video_link"
-            value={formData.video_link}
-            onChange={handleChange}
-          />
-        </div>
-
-        <div>
-          <label htmlFor="nr_of_people">Number of People:</label>
-          <input class="input-fields"
-            type="number"
-            id="nr_of_people"
-            name="nr_of_people"
-            value={formData.nr_of_people}
-            onChange={handleChange}
-            min="0" // Optional: Ensures the number is non-negative
-          />
-        </div>
-
-        {/* Dynamic Steps Input Fields */}
-        {formData.steps.map((step, index) => (
-          <div key={index}>
-            <label htmlFor={`step_${index}`}>Step {index + 1}:</label>
+    <div class="form-container">
+      <div id="recipeForm">
+        <h1>Create Recipe</h1>
+        <form onSubmit={handleSubmit} className="recipeForm">
+          <div>
+            <label htmlFor="creator_id">Creator ID:</label>
             <input class="input-fields"
               type="text"
-              id={`step_${index}`}
-              name={`step_${index}`}
-              value={step}
+              id="creator_id"
+              name="creator_id"
+              value={formData.creator_id}
               onChange={handleChange}
               required
             />
           </div>
-        ))}
 
-        <div class="button-div"  style={{ display: 'flex', alignItems: 'center', flexDirection: 'row' }}>
-          <button
-            type="button"
-            onClick={addStep}
-            className="step-button"
-            disabled={formData.steps.length >= MAX_STEPS}
-          >
-            +
-          </button>
-          <button
-            type="button"
-            onClick={removeLastStep}
-            className="step-button"
-            disabled={formData.steps.length <= 1}
-          >
-            -
-          </button>
-        </div>
+          <h3>Basic information</h3>
+          <div>
+            <label htmlFor="title">Title:</label>
+            <input class="input-fields"
+              type="text"
+              id="title"
+              name="title"
+              value={formData.title}
+              onChange={handleChange}
+              required
+            />
+          </div>
 
-        {stepWarning && (
-          <p style={{ color: 'red' }}>{stepWarning}</p>
-        )}
+          <div>
+            <label htmlFor="description">Description:</label>
+            <textarea 
+              id="description"
+              name="description"
+              value={formData.description}
+              onChange={handleChange}
+            />
+          </div>
 
-        <button type="submit" className="button-50" role="button">
-          Create Recipe
-        </button>
-      </form>
+          <div>
+            <label htmlFor="video_link">Video Link:</label>
+            <input class="input-fields"
+              type="text"
+              id="video_link"
+              name="video_link"
+              value={formData.video_link}
+              onChange={handleChange}
+            />
+          </div>
 
-      {status && (
-        <div>
-          {status.success ? (
-            <p style={{ color: 'green' }}>{status.message}</p>
-          ) : (
-            <p style={{ color: 'red' }}>{status.message}</p>
+          <div>
+            <label htmlFor="nr_of_people">Number of People:</label>
+            <input class="input-fields"
+              type="number"
+              id="nr_of_people"
+              name="nr_of_people"
+              value={formData.nr_of_people}
+              onChange={handleChange}
+              min="0" // Optional: Ensures the number is non-negative
+            />
+          </div>
+
+          <h3>Ingredients</h3>
+          <div class="ingredient-div">
+            <label htmlFor="ingredients" class="number-label">#1</label>
+            <h4>Name:</h4>
+            <input class="input-fields"
+              type="text"
+              id="name"
+              name="name"
+              value={formData.name}
+              onChange={handleChange}
+            />
+            <h4>Quantity:</h4>
+            <input class="input-fields"
+              type="number"
+              id="quantity"
+              name="quantity"
+              value={formData.quantity}
+              onChange={handleChange}
+            />
+            <h4>Unit:</h4>
+            <input class="input-fields"
+              type="text"
+              id="unit"
+              name="unit"
+              value={formData.unit}
+              onChange={handleChange}
+            />
+          </div>
+
+          {/* Dynamic Steps Input Fields */}
+          <h3>Cooking steps</h3>
+          {formData.steps.map((step, index) => (
+            <div key={index}>
+              <label htmlFor={`step_${index}`}>Step {index + 1}:</label>
+              <input class="input-fields"
+                type="text"
+                id={`step_${index}`}
+                name={`step_${index}`}
+                value={step}
+                onChange={handleChange}
+                required
+              />
+            </div>
+          ))}
+
+          <div class="button-div"  style={{ display: 'flex', alignItems: 'center', flexDirection: 'row' }}>
+            <button
+              type="button"
+              onClick={addStep}
+              className="step-button"
+              disabled={formData.steps.length >= MAX_STEPS}
+            >
+              +
+            </button>
+            <button
+              type="button"
+              onClick={removeLastStep}
+              className="step-button"
+              disabled={formData.steps.length <= 1}
+            >
+              -
+            </button>
+          </div>
+
+          {stepWarning && (
+            <p style={{ color: 'red' }}>{stepWarning}</p>
           )}
-        </div>
-      )}
+
+          <button type="submit" className="button-50" role="button">
+            Create Recipe
+          </button>
+        </form>
+
+        {status && (
+          <div>
+            {status.success ? (
+              <p style={{ color: 'green' }}>{status.message}</p>
+            ) : (
+              <p style={{ color: 'red' }}>{status.message}</p>
+            )}
+          </div>
+        )}
+      </div>
     </div>
   );
 };

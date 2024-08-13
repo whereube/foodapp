@@ -124,26 +124,50 @@ export const getRecipeRoutes = () => {
 
     if (validate.valid && validateStr.valid && validateInt.valid) {
       try {
-        const result = await object.recipe.create({
+        const recipeData = await object.recipe.create({
           id,
           creator_id,
           title,
           description,
           video_link,
-          nr_of_people
+          nr_of_people,
+          name,
+          quantity,
+          unit
         }); 
 
-        if (result === null) {
+        if (!recipeData) {
           return res.status(404).json('No recipe created');
         }
+  
+        // Loop through the steps dictionary and validate + insert each step
+        for (const stepNumber in steps) {
+          if (steps.hasOwnProperty(stepNumber)) {
+            const stepDescription = steps[stepNumber];
+  
+            // Validate the step description
+            const validateStep = validateString({ stepDescription });
+            if (!validateStep.valid) {
+              return res.status(400).json({ stepMessage: validateStep.message });
+            }
+
+            // Insert the step into the database
+            await object.step.create({
+              id: uuidv4(), 
+              recipe_id: id, 
+              index: parseInt(stepNumber, 10), 
+              text: stepDescription 
+            });
+          }
+        }  
         res.status(201).json({ message: 'Recipe created'});
-        } catch (error) {
-          console.error('Error creating recipe', error);
-          res.status(500).json('Internal Server Error');
-        }
-      } else {
-        res.status(400).json({ uuidMessage: validate.message, strMessage: validateStr.message, intMessage: validateInt.message });
+      } catch (error) {
+        console.error('Error creating recipe', error);
+        res.status(500).json('Internal Server Error');
       }
+    } else {
+      res.status(400).json({ uuidMessage: validate.message, strMessage: validateStr.message, intMessage: validateInt.message });
+    }
     });
   
   return router;
