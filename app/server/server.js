@@ -1,6 +1,7 @@
 import express from 'express';
 import { getRecipeRoutes } from './routes/recipeRoutes.js';
 import { getCreatorRoutes } from './routes/creatorRoutes.js';
+import { getStepRoutes } from './routes/stepRoutes.js';
 import { corsMiddleware } from './middleware/corsMiddleware.js';
 
 
@@ -12,6 +13,7 @@ export const createServer = () => {
 //   app.use(authenticateUser);
   app.use('/recipe',  getRecipeRoutes());
   app.use('/creator',  getCreatorRoutes());
+  app.use('/step',  getStepRoutes());
 
   return app;
 };

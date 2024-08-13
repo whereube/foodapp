@@ -1,0 +1,15 @@
+.stepBox{
+    display: flex;
+    flex-direction: row;
+}
+
+.steps{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+
+.stepDesc{
+    margin-left: 3px;
+}
