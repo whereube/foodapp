@@ -1,6 +1,7 @@
 import { recipe } from "./recipe.js";
 import { ingredient } from "./ingredient.js";
 import { creator } from "./creator.js";
+import { step } from "./step.js"
 
 
 const environment = process.env.DEV_ENVIRONMENT;
@@ -26,5 +27,6 @@ if (process.env.DEV_ENVIRONMENT === 'local') {
 export {
     creator,
     ingredient,
-    recipe
+    recipe,
+    step
 }
