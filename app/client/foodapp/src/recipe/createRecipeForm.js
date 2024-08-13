@@ -60,9 +60,9 @@ const RecipeForm = () => {
   };
 
   return (
-    <div>
+    <div id="recipeForm">
       <h1>Create Recipe</h1>
-      <form onSubmit={handleSubmit}>
+      <form onSubmit={handleSubmit} class="recipeForm">
         <div>
           <label htmlFor="creator_id">Creator ID:</label>
           <input
@@ -120,7 +120,18 @@ const RecipeForm = () => {
           />
         </div>
 
-        <button type="submit">Create Recipe</button>
+        <div>
+          <label htmlFor="step">Steps:</label>
+          <input
+            type="text"
+            id="step"
+            name="step"
+            value={formData.step}
+            onChange={handleChange}
+          />
+        </div>
+
+        <button type="submit" class="button-50" role="button">Create Recipe</button>
       </form>
 
       {status && (
