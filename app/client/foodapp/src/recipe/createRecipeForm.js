@@ -54,12 +54,41 @@ const RecipeForm = () => {
     setStepWarning(null); // Clear the warning if adding is successful
   };
 
+  // Remove the last step input field
+  const removeLastStep = () => {
+    if (formData.steps.length > 1) {
+      setFormData((prevData) => {
+        const newSteps = [...prevData.steps];
+        newSteps.pop();
+        return {
+          ...prevData,
+          steps: newSteps
+        };
+      });
+    }
+  };
+
   // Handle form submission
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    // Log form data before sending it
-    console.log('Submitting form data:', formData);
+    // Convert steps array to a dictionary with indices as keys
+    const stepsDict = formData.steps.reduce((acc, step, index) => {
+      acc[index + 1] = step; // Keys are 1-based index
+      return acc;
+    }, {});
+
+    // Log steps dictionary before sending it
+    console.log('Steps dictionary:', stepsDict);
+
+    // Prepare the form data with the steps as a dictionary
+    const dataToSend = {
+      ...formData,
+      steps: stepsDict
+    };
+
+    // Log the complete form data before sending it
+    console.log('Submitting form data:', dataToSend);
 
     try {
       const response = await fetch('http://localhost:443/recipe/createRecipe', {
@@ -67,7 +96,7 @@ const RecipeForm = () => {
         headers: {
           'Content-Type': 'application/json' // Indicates that the body of the request contains JSON
         },
-        body: JSON.stringify(formData) // Convert formData to JSON string
+        body: JSON.stringify(dataToSend) // Convert dataToSend to JSON string
       });
 
       if (!response.ok) {
@@ -96,7 +125,7 @@ const RecipeForm = () => {
       <form onSubmit={handleSubmit} className="recipeForm">
         <div>
           <label htmlFor="creator_id">Creator ID:</label>
-          <input
+          <input class="input-fields"
             type="text"
             id="creator_id"
             name="creator_id"
@@ -108,7 +137,7 @@ const RecipeForm = () => {
 
         <div>
           <label htmlFor="title">Title:</label>
-          <input
+          <input class="input-fields"
             type="text"
             id="title"
             name="title"
@@ -120,7 +149,7 @@ const RecipeForm = () => {
 
         <div>
           <label htmlFor="description">Description:</label>
-          <textarea
+          <textarea 
             id="description"
             name="description"
             value={formData.description}
@@ -130,7 +159,7 @@ const RecipeForm = () => {
 
         <div>
           <label htmlFor="video_link">Video Link:</label>
-          <input
+          <input class="input-fields"
             type="text"
             id="video_link"
             name="video_link"
@@ -141,7 +170,7 @@ const RecipeForm = () => {
 
         <div>
           <label htmlFor="nr_of_people">Number of People:</label>
-          <input
+          <input class="input-fields"
             type="number"
             id="nr_of_people"
             name="nr_of_people"
@@ -155,7 +184,7 @@ const RecipeForm = () => {
         {formData.steps.map((step, index) => (
           <div key={index}>
             <label htmlFor={`step_${index}`}>Step {index + 1}:</label>
-            <input
+            <input class="input-fields"
               type="text"
               id={`step_${index}`}
               name={`step_${index}`}
@@ -166,9 +195,24 @@ const RecipeForm = () => {
           </div>
         ))}
 
-        <button type="button" onClick={addStep} class="plus-button" disabled={formData.steps.length >= MAX_STEPS}>
-          +
-        </button>
+        <div class="button-div"  style={{ display: 'flex', alignItems: 'center', flexDirection: 'row' }}>
+          <button
+            type="button"
+            onClick={addStep}
+            className="step-button"
+            disabled={formData.steps.length >= MAX_STEPS}
+          >
+            +
+          </button>
+          <button
+            type="button"
+            onClick={removeLastStep}
+            className="step-button"
+            disabled={formData.steps.length <= 1}
+          >
+            -
+          </button>
+        </div>
 
         {stepWarning && (
           <p style={{ color: 'red' }}>{stepWarning}</p>

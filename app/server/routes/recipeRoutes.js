@@ -114,7 +114,8 @@ export const getRecipeRoutes = () => {
       title,
       description,
       video_link,
-      nr_of_people
+      nr_of_people,
+      step_1
     } = req.body;
 
     const id = uuidv4();
