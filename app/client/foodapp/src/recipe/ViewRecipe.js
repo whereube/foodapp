@@ -52,6 +52,7 @@ const ViewRecipe = (props) => {
             </a>
             <div className='stepsAndIngredients'>
                 <div className='steps'>
+                    <h4>Steps</h4>
                     {step.map(aStep => (
                         <div key={aStep.id} className='stepBox'>
                             <p>{aStep.index}.</p><p className='stepDesc'>{aStep.text}</p>
@@ -59,6 +60,7 @@ const ViewRecipe = (props) => {
                     ))}
                 </div>
                 <div className='ingredients'>
+                    <h4>Ingredients</h4>
                     {ingredient.map(aIngredient => (
                         <div key={aIngredient.id} className='ingredientBox'>
                             <p>{aIngredient.quantity}</p>
