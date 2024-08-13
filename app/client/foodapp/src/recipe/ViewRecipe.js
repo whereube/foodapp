@@ -52,6 +52,19 @@ const ViewRecipe = (props) => {
         setCurrentServingSize(newServingSize)
     }
 
+    const copyIngredientsToList = async () => {
+        let newShopingList = []
+        ingredient.map(aIngredient => {
+            let item = "";
+            item = `${((aIngredient.quantity / recipe.nr_of_people) * currentServingSize).toFixed(2)} ${aIngredient.unit} ${aIngredient.name} \n`;
+            newShopingList.push(item);
+        });
+        console.log(newShopingList)
+        const textToCopy = newShopingList.toString().replace(/,/g, "")
+        navigator.clipboard.writeText(textToCopy);
+    }
+    
+
     return (
         <div className='recipePage'>
             <h1>{recipe.title}</h1>
@@ -84,6 +97,7 @@ const ViewRecipe = (props) => {
                             <p>{aIngredient.name}</p>
                         </div>
                     ))}
+                    <button onClick={copyIngredientsToList}>Copy ingredients</button>
                 </div>
             </div>
         </div>
