@@ -1,0 +1,48 @@
+.stepBox{
+    display: flex;
+    flex-direction: row;
+    width: 80%;
+    justify-content: space-around;
+    margin-bottom: 5px;
+    -webkit-border-radius: 10px;
+    border: 3px grey solid ;
+    border-radius: 10px;
+}
+
+.steps{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 50%;
+}
+
+
+.stepDesc{
+    margin-left: 3px;
+}
+
+
+
+.ingredientBox{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    width: 60%;
+}
+
+.ingredients{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    border-right: 3px solid black;
+    width: 50%;
+}
+
+
+.stepsAndIngredients{
+    display: flex;
+    flex-direction: row-reverse;
+    width: 80%;
+    margin: auto;
+}
+
