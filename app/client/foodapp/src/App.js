@@ -1,8 +1,7 @@
 import './App.css';
-import './recipe/createRecipeForm.css';
 import CreatorPage from './creator/CreatorPage'
-import RecipeForm from './recipe/createRecipeForm';
-import ViewRecipe from './recipe/ViewRecipe';
+import RecipeForm from './recipe/createRecipeForm.js';
+import ViewRecipe from './recipe/ViewRecipe.js';
 import { BrowserRouter, Routes, Route, useParams } from "react-router-dom";
 
 

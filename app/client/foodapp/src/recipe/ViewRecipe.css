@@ -1,3 +1,8 @@
+.recipePage {
+  text-align: center;
+}
+
+
 .stepBox{
     display: flex;
     flex-direction: row;
@@ -45,4 +50,18 @@
     width: 80%;
     margin: auto;
 }
+
+.servingSize{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    width: 50%;
+}
+
+#utensilsIcon{
+    max-height: 20px;
+    max-width: 20px;
+}
+
 
