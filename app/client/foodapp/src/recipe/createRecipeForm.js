@@ -7,21 +7,51 @@ const RecipeForm = () => {
     description: '',
     video_link: '',
     nr_of_people: '', // Initially set to an empty string
-    creator_id: ''
+    creator_id: '',
+    steps: [''] // Initialize with one empty string to show the first step
   });
 
   // State for form submission status
   const [status, setStatus] = useState(null);
 
+  // State for step limit warning
+  const [stepWarning, setStepWarning] = useState(null);
+
+  const MAX_STEPS = 20;
+
   // Handle input change
   const handleChange = (e) => {
     const { name, value } = e.target;
-    // Convert nr_of_people to an integer if the field name matches
-    const newValue = name === 'nr_of_people' ? parseInt(value, 10) : value;
+    if (name.startsWith('step')) {
+      const index = parseInt(name.split('_')[1], 10);
+      setFormData((prevData) => {
+        const newSteps = [...prevData.steps];
+        newSteps[index] = value;
+        return {
+          ...prevData,
+          steps: newSteps
+        };
+      });
+    } else {
+      const newValue = name === 'nr_of_people' ? parseInt(value, 10) : value;
+      setFormData((prevData) => ({
+        ...prevData,
+        [name]: newValue
+      }));
+    }
+  };
+
+  // Add a new step input field
+  const addStep = () => {
+    if (formData.steps.length >= MAX_STEPS) {
+      setStepWarning('You cannot add more than 20 steps.');
+      return;
+    }
     setFormData((prevData) => ({
       ...prevData,
-      [name]: newValue
+      steps: [...prevData.steps, '']
     }));
+    setStepWarning(null); // Clear the warning if adding is successful
   };
 
   // Handle form submission
@@ -52,7 +82,8 @@ const RecipeForm = () => {
         description: '',
         video_link: '',
         nr_of_people: '', // Clear new field
-        creator_id: ''
+        creator_id: '',
+        steps: [''] // Reset to one empty step
       });
     } catch (error) {
       setStatus({ success: false, message: error.message });
@@ -62,7 +93,7 @@ const RecipeForm = () => {
   return (
     <div id="recipeForm">
       <h1>Create Recipe</h1>
-      <form onSubmit={handleSubmit} class="recipeForm">
+      <form onSubmit={handleSubmit} className="recipeForm">
         <div>
           <label htmlFor="creator_id">Creator ID:</label>
           <input
@@ -120,18 +151,32 @@ const RecipeForm = () => {
           />
         </div>
 
-        <div>
-          <label htmlFor="step">Steps:</label>
-          <input
-            type="text"
-            id="step"
-            name="step"
-            value={formData.step}
-            onChange={handleChange}
-          />
-        </div>
+        {/* Dynamic Steps Input Fields */}
+        {formData.steps.map((step, index) => (
+          <div key={index}>
+            <label htmlFor={`step_${index}`}>Step {index + 1}:</label>
+            <input
+              type="text"
+              id={`step_${index}`}
+              name={`step_${index}`}
+              value={step}
+              onChange={handleChange}
+              required
+            />
+          </div>
+        ))}
 
-        <button type="submit" class="button-50" role="button">Create Recipe</button>
+        <button type="button" onClick={addStep} class="plus-button" disabled={formData.steps.length >= MAX_STEPS}>
+          +
+        </button>
+
+        {stepWarning && (
+          <p style={{ color: 'red' }}>{stepWarning}</p>
+        )}
+
+        <button type="submit" className="button-50" role="button">
+          Create Recipe
+        </button>
       </form>
 
       {status && (
