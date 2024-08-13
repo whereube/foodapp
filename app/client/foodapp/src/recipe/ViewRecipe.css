@@ -1,15 +1,46 @@
 .stepBox{
     display: flex;
     flex-direction: row;
+    -webkit-box-shadow: 10px 10px 10px 10px #CCCCCC;
+    box-shadow: 10px 10px 10px 10px #CCCCCC;
+    padding: 3px 20% ;
 }
 
 .steps{
     display: flex;
     flex-direction: column;
     align-items: center;
+    border: 3px solid black;    
+    width: 50%;
 }
 
 
 .stepDesc{
     margin-left: 3px;
 }
+
+
+
+.ingredientBox{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    width: 60%;
+}
+
+.ingredients{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    border: 3px solid black;
+    width: 50%;
+}
+
+
+.stepsAndIngredients{
+    display: flex;
+    flex-direction: row-reverse;
+    width: 80%;
+    margin: auto;
+}
+
