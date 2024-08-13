@@ -79,7 +79,7 @@ const ViewRecipe = (props) => {
                     </div>
                     {ingredient.map(aIngredient => (
                         <div key={aIngredient.id} className='ingredientBox'>
-                            <p>{(aIngredient.quantity/recipe.nr_of_people) * currentServingSize}</p>
+                            <p>{+((aIngredient.quantity/recipe.nr_of_people) * currentServingSize).toFixed(2)}</p>
                             <p>{aIngredient.unit}</p>
                             <p>{aIngredient.name}</p>
                         </div>
