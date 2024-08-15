@@ -78,7 +78,7 @@ const ViewRecipe = (props) => {
                     <h4>Steps</h4>
                     {step.map(aStep => (
                         <div key={aStep.id} className='stepBox'>
-                            <p>{aStep.index}.</p><p className='stepDesc'>{aStep.text}</p>
+                            <p className='stepIndex'>{aStep.index}.</p><p className='stepDesc'>{aStep.text}</p>
                         </div>
                     ))}
                 </div>
@@ -97,7 +97,7 @@ const ViewRecipe = (props) => {
                             <p>{aIngredient.name}</p>
                         </div>
                     ))}
-                    <button onClick={copyIngredientsToList}>Copy ingredients</button>
+                    <button onClick={copyIngredientsToList} className='button-small'>Copy ingredients</button>
                 </div>
             </div>
         </div>
