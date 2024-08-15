@@ -25,6 +25,7 @@ const RecipeForm = () => {
   // Handle input change
   const handleChange = (e) => {
     const { name, value } = e.target;
+    console.log(name)
 
     if (name.startsWith('step_')) {
       // Handle step input changes
@@ -41,6 +42,7 @@ const RecipeForm = () => {
       // Handle ingredient input changes
       const [field, index] = name.split('_').slice(1);
       setFormData((prevData) => {
+        console.log(prevData)
         const newIngredients = [...prevData.ingredients];
         newIngredients[index] = {
           ...newIngredients[index],
@@ -248,7 +250,7 @@ const RecipeForm = () => {
                 className="input-fields"
                 type="text"
                 id={`ingredient_name_${index}`}
-                name={`name_${index}`}
+                name={`ingredient_name_${index}`}
                 value={ingredient.name}
                 onChange={handleChange}
               />
@@ -257,7 +259,7 @@ const RecipeForm = () => {
                 className="input-fields"
                 type="number"
                 id={`ingredient_quantity_${index}`}
-                name={`quantity_${index}`}
+                name={`ingredient_quantity_${index}`}
                 value={ingredient.quantity}
                 onChange={handleChange}
               />
@@ -265,7 +267,7 @@ const RecipeForm = () => {
               <select
                 className="input-fields"
                 id={`ingredient_unit_${index}`}
-                name={`unit_${index}`}
+                name={`ingredient_unit_${index}`}
                 value={ingredient.unit}
                 onChange={handleChange}
               >
