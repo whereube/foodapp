@@ -1,13 +1,13 @@
 import { useParams } from 'react-router-dom';
 import { useState, useEffect } from "react";
 import './ViewRecipe.css'
-
+import EmbededVideo from './EmbededVideo';
 
 const ViewRecipe = (props) => {
 
     const [recipe, setRecipe] = useState({})
     const [step, setStep] = useState([])
-    const [ingredient, setIngredient] = useState( [])
+    const [ingredient, setIngredient] = useState([])
     const [currentServingSize, setCurrentServingSize] = useState(0)
     let { recipeId } = useParams();
 
@@ -15,11 +15,11 @@ const ViewRecipe = (props) => {
     useEffect(() => {
         getRecipe(recipeId);
         getStep(recipeId);
-        getIngredient(recipeId)
+        getIngredient(recipeId);
     }, []);
 
     useEffect(() => {
-        setCurrentServingSize(recipe.nr_of_people)
+        setCurrentServingSize(recipe.nr_of_people);
     }, [recipe]);
 
     const getRecipe = async (recipeId) =>{
@@ -59,7 +59,6 @@ const ViewRecipe = (props) => {
             item = `${((aIngredient.quantity / recipe.nr_of_people) * currentServingSize).toFixed(2)} ${aIngredient.unit} ${aIngredient.name} \n`;
             newShopingList.push(item);
         });
-        console.log(newShopingList)
         const textToCopy = newShopingList.toString().replace(/,/g, "")
         navigator.clipboard.writeText(textToCopy);
     }
@@ -68,11 +67,9 @@ const ViewRecipe = (props) => {
     return (
         <div className='recipePage'>
             <h1>{recipe.title}</h1>
+            <EmbededVideo recipe={recipe}></EmbededVideo>
             <p>{recipe.description}</p>
             <p>The recipe is for: {recipe.nr_of_people} people</p>
-            <a href={recipe.video_link}> 
-                <p>Watch the video here: {recipe.video_link}</p>
-            </a>
             <div className='stepsAndIngredients'>
                 <div className='steps'>
                     <h4>Steps</h4>
