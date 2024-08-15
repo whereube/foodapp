@@ -1,7 +1,7 @@
 import { useParams } from 'react-router-dom';
 import { useState, useEffect } from "react";
 import './ViewRecipe.css'
-import EmbededVideo from './EmbededVideo';
+import EmbededVideo from './EmbededVideo.js';
 
 const ViewRecipe = (props) => {
 
