@@ -38,13 +38,13 @@ export const getCreatorRoutes = () => {
             });
             
             if (result === null) {
-                return res.status(404).json('No have created');
+                return res.status(404).json('No new creator created');
             } else{
-                res.status(201).json({ message: 'Have created'});
+                res.status(201).json({ message: 'New creator created'});
             }
 
         } catch (error) {
-            console.error('Error creating have', error);
+            console.error('Error creating creator', error);
             res.status(500).json('Internal Server Error');
         }
     });

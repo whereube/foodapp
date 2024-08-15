@@ -7,6 +7,8 @@ const NewCreator = () => {
         email: '',
         password: ''
     });
+    const [status, setStatus] = useState(null);
+
 
     const handleChange = (e) =>{
         if (e.target.name === "username"){
@@ -27,7 +29,36 @@ const NewCreator = () => {
                 password: e.target.value
             }));
         }
-    } 
+    }
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+
+    try {
+        const response = await fetch('http://localhost:443/creator/add', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json' // Indicates that the body of the request contains JSON
+            },
+            body: JSON.stringify(formData) // Convert dataToSend to JSON string
+        });
+
+        if (!response.ok) {
+            throw new Error('Failed to add creator');
+        }
+
+        const result = await response.json();
+        setStatus({ success: true, message: 'Creator added successfully!' });
+        // Clear form fields
+        setFormData({
+            username: '',
+            email: '',
+            password: ''
+        });
+        } catch (error) {
+        setStatus({ success: false, message: error.message });
+    }
+  };
 
 
 
@@ -37,8 +68,8 @@ const NewCreator = () => {
 
     return (
         <>
-            <p>Test creator page3</p>
-            <form className="newCreator">
+            <p>New creator</p>
+            <form onSubmit={handleSubmit} className="newCreator">
                 <div>
                     <label htmlFor="username">Username</label>
                     <input
@@ -55,7 +86,7 @@ const NewCreator = () => {
                     <label htmlFor="email">Email</label>
                     <input
                         className="input-fields"
-                        type="text"
+                        type="email"
                         id="email"
                         name="email"
                         value={formData.email}
@@ -75,7 +106,19 @@ const NewCreator = () => {
                         required
                     />
                 </div>
+                <button type="submit" className="button-50" role="button">
+                Create Recipe
+                </button>
             </form>
+            {status && (
+                <div>
+                    {status.success ? (
+                        <p style={{ color: 'green' }}>{status.message}</p>
+                    ) : (
+                        <p style={{ color: 'red' }}>{status.message}</p>
+                    )}
+                </div>
+            )}
         </>
     )
 }
