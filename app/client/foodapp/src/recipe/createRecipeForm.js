@@ -25,7 +25,7 @@ const RecipeForm = () => {
   // Handle input change
   const handleChange = (e) => {
     const { name, value } = e.target;
-    console.log(name)
+
 
     if (name.startsWith('step_')) {
       // Handle step input changes
@@ -42,7 +42,6 @@ const RecipeForm = () => {
       // Handle ingredient input changes
       const [field, index] = name.split('_').slice(1);
       setFormData((prevData) => {
-        console.log(prevData)
         const newIngredients = [...prevData.ingredients];
         newIngredients[index] = {
           ...newIngredients[index],

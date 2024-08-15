@@ -114,7 +114,8 @@ export const getRecipeRoutes = () => {
       description,
       video_link,
       nr_of_people,
-      steps
+      steps,
+      ingredients
     } = req.body;
 
     const id = uuidv4();
@@ -130,10 +131,7 @@ export const getRecipeRoutes = () => {
           title,
           description,
           video_link,
-          nr_of_people,
-          name,
-          quantity,
-          unit
+          nr_of_people
         }); 
 
         if (!recipeData) {
@@ -160,6 +158,16 @@ export const getRecipeRoutes = () => {
             });
           }
         }  
+        for (const ingredientNumber in ingredients) {
+          const ingredientInfo = ingredients[ingredientNumber]
+          await object.ingredient.create({
+            id: uuidv4(), 
+            recipe_id: id, 
+            name: ingredientInfo.name, 
+            quantity: ingredientInfo.quantity, 
+            unit: ingredientInfo.unit 
+          })
+        }
         res.status(201).json({ message: 'Recipe created'});
       } catch (error) {
         console.error('Error creating recipe', error);
