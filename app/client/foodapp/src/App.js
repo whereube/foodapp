@@ -3,6 +3,7 @@ import CreatorPage from './creator/CreatorPage'
 import RecipeForm from './recipe/createRecipeForm.js';
 import ViewRecipe from './recipe/ViewRecipe.js';
 import NewCreator from './creator/NewCreator.js';
+import Login from './creator/Login.js';
 import { BrowserRouter, Routes, Route, useParams } from "react-router-dom";
 
 
@@ -22,6 +23,9 @@ function App() {
           ></Route>
           <Route path="/creator/new" 
             element={<NewCreator />}
+          ></Route>
+          <Route path="/login" 
+            element={<Login />}
           ></Route>
         </Routes>
       </BrowserRouter>

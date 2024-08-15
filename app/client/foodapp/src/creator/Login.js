@@ -1,10 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import './NewCreator.css'
 
-const NewCreator = () => {
+const Login = () => {
 
     const [formData, setFormData] = useState({
-        username: '',
         email: '',
         password: ''
     });
@@ -12,12 +11,6 @@ const NewCreator = () => {
 
 
     const handleChange = (e) =>{
-        if (e.target.name === "username"){
-            setFormData((prevData) => ({
-                ...prevData,
-                username: e.target.value
-            }));
-        }
         if (e.target.name === "email"){
             setFormData((prevData) => ({
                 ...prevData,
@@ -36,7 +29,7 @@ const NewCreator = () => {
     e.preventDefault();
 
     try {
-        const response = await fetch('http://localhost:443/creator/add', {
+        const response = await fetch('http://localhost:443/creator/login', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json' // Indicates that the body of the request contains JSON
@@ -49,16 +42,16 @@ const NewCreator = () => {
             console.log(errorData)
             console.error('Error:', errorData); 
             throw new Error(errorData);
+        } else {
+            const result = await response.json();
+            console.log(result)
+            setStatus({ success: true, message: 'Logged in' });
+            // Clear form fields
+            setFormData({
+                email: '',
+                password: ''
+            });
         }
-
-        const result = await response.json();
-        setStatus({ success: true, message: 'Creator added successfully!' });
-        // Clear form fields
-        setFormData({
-            username: '',
-            email: '',
-            password: ''
-        });
         } catch (error) {
         setStatus({ success: false, message: error.message });
     }
@@ -68,20 +61,8 @@ const NewCreator = () => {
     return (
         <>
             <div className="newCreatorPage">
-                <p>New creator</p>
+                <p>Login</p>
                 <form onSubmit={handleSubmit} className="newCreator">
-                    <div className='formDiv'>
-                        <label htmlFor="username">Username</label>
-                        <input
-                            className="input-fields"
-                            type="text"
-                            id="username"
-                            name="username"
-                            value={formData.username}
-                            onChange={handleChange}
-                            required
-                        />
-                    </div>
                     <div className='formDiv'>
                         <label htmlFor="email">Email</label>
                         <input
@@ -107,7 +88,7 @@ const NewCreator = () => {
                         />
                     </div>
                     <button type="submit" className="button-small" role="button">
-                        Create
+                        Login
                     </button>
                 </form>
                 {status && (
@@ -124,4 +105,4 @@ const NewCreator = () => {
     )
 }
 
-export default NewCreator
+export default Login

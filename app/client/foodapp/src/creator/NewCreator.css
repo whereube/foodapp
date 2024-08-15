@@ -1,0 +1,10 @@
+.newCreatorPage{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.formDiv{
+    display: flex;
+    flex-direction: column;
+}

@@ -12,6 +12,21 @@ export const getCreatorRoutes = () => {
         res.status(200).send(creator);
     });
 
+    router.post('/login', async (req, res, next) => {
+        const { email, password } = req.body;
+        const creator = await object.creator.findAll({
+            where: {
+                email: email,
+                password: password
+            }
+        });
+        if (creator.length !== 0){
+            res.status(200).send(creator);
+        } else {
+            res.status(401).json('Login failed');
+        }
+    });
+
     router.get('/getAll', async (req, res, next) => {
         const allCreators = await object.creator.findAll({
         });
@@ -28,24 +43,33 @@ export const getCreatorRoutes = () => {
         
         const id = uuidv4();
 
-
-        try {
-            const result = await object.creator.create({
-                id,
-                username,
-                password,
-                email
-            });
-            
-            if (result === null) {
-                return res.status(404).json('No new creator created');
-            } else{
-                res.status(201).json({ message: 'New creator created'});
+        const checkUsername = await object.creator.findAll({
+            where: {
+                username: username
             }
+        });
 
-        } catch (error) {
-            console.error('Error creating creator', error);
-            res.status(500).json('Internal Server Error');
+        if (checkUsername.length === 0){
+            try {
+                const result = await object.creator.create({
+                    id,
+                    username,
+                    password,
+                    email
+                });
+                
+                if (result === null) {
+                    return res.status(404).json('No new creator created');
+                } else{
+                    res.status(201).json({ message: 'New creator created'});
+                }
+
+            } catch (error) {
+                console.error('Error creating creator', error);
+                res.status(500).json('Internal Server Error');
+            }
+        } else{
+            return res.status(401).json('Username already taken');
         }
     });
 
