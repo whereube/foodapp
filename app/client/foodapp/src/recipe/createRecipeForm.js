@@ -244,7 +244,7 @@ const RecipeForm = () => {
           <h3>Ingredients</h3>
           {formData.ingredients.map((ingredient, index) => (
             <div key={index} className="ingredient-div">
-              <h4 class="number-label">#{index + 1}</h4>
+              <h4 className="number-label">#{index + 1}</h4>
               <label htmlFor={`ingredient_name_${index}`}>Name:</label>
               <input
                 className="input-fields"

@@ -1,5 +1,7 @@
 import React, { useState, useEffect } from 'react';
-import './NewCreator.css'
+import { useAuth } from '../auth/AuthProvider';
+import { useNavigate } from "react-router-dom";
+
 
 const Login = () => {
 
@@ -8,6 +10,8 @@ const Login = () => {
         password: ''
     });
     const [status, setStatus] = useState(null);
+    const auth = useAuth();
+    const navigate = useNavigate(); // Correct usage here
 
 
     const handleChange = (e) =>{
@@ -27,40 +31,18 @@ const Login = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-
-    try {
-        const response = await fetch('http://localhost:443/creator/login', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json' // Indicates that the body of the request contains JSON
-            },
-            body: JSON.stringify(formData) // Convert dataToSend to JSON string
-        });
-
-        if (!response.ok) {
-            const errorData = await response.json();
-            console.log(errorData)
-            console.error('Error:', errorData); 
-            throw new Error(errorData);
+        const result = await auth.loginAction(formData);
+        if (result.success) {
+            navigate('/'); // Redirect on successful login
         } else {
-            const result = await response.json();
-            console.log(result)
-            setStatus({ success: true, message: 'Logged in' });
-            // Clear form fields
-            setFormData({
-                email: '',
-                password: ''
-            });
+            setStatus({ success: false, message: result.message });
         }
-        } catch (error) {
-        setStatus({ success: false, message: error.message });
-    }
   };
 
 
     return (
         <>
-            <div className="newCreatorPage">
+            <div className="loginPage">
                 <p>Login</p>
                 <form onSubmit={handleSubmit} className="newCreator">
                     <div className='formDiv'>
