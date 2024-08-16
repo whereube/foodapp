@@ -30,11 +30,10 @@ const CreatorPage = () => {
 
     return (
         <>
-            <h1>{creator.username}</h1>
-            <h3>Recipes:</h3>
+            <h1>Recipes:</h1>
             {allRecipes.map((recipe) => (
                 <div className='recipeDiv' key={recipe.id}>
-                    <a href={`/recipe/${recipe.id}`}>{recipe.title}</a>
+                    <a href={`/${creator.username}/${recipe.id}`}>{recipe.title}</a>
                 </div>
             ))}
         </>
