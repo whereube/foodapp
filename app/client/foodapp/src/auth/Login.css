@@ -1,0 +1,14 @@
+.loginPage{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+
+.loginForm{
+    margin-bottom: 20px;
+}
+
+.formDiv{
+    margin-bottom: 10px;
+}

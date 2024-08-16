@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
-import { useAuth } from '../auth/AuthProvider';
+import { useAuth } from './AuthProvider';
 import { useNavigate } from "react-router-dom";
+import './Login.css'
 
 
 const Login = () => {
@@ -43,8 +44,8 @@ const Login = () => {
     return (
         <>
             <div className="loginPage">
-                <p>Login</p>
-                <form onSubmit={handleSubmit} className="newCreator">
+                <h2>Login</h2>
+                <form onSubmit={handleSubmit} className="loginForm">
                     <div className='formDiv'>
                         <label htmlFor="email">Email</label>
                         <input
@@ -73,6 +74,7 @@ const Login = () => {
                         Login
                     </button>
                 </form>
+                <a href='/creator/new'>Don't have an account yet? Click here to create one</a>
                 {status && (
                     <div>
                         {status.success ? (

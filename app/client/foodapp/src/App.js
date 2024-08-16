@@ -3,7 +3,7 @@ import CreatorPage from './creator/CreatorPage'
 import RecipeForm from './recipe/createRecipeForm.js';
 import ViewRecipe from './recipe/ViewRecipe.js';
 import NewCreator from './creator/NewCreator.js';
-import Login from './creator/Login.js';
+import Login from './auth/Login.js';
 import {AuthProvider, useAuth} from './auth/AuthProvider.js';
 import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
 
