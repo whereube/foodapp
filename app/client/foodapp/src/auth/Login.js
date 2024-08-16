@@ -12,7 +12,7 @@ const Login = () => {
     });
     const [status, setStatus] = useState(null);
     const auth = useAuth();
-    const navigate = useNavigate(); // Correct usage here
+    const navigate = useNavigate();
 
 
     const handleChange = (e) =>{

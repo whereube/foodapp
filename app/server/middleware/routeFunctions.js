@@ -28,7 +28,7 @@ export const validateInteger = (input) => {
 };
 
 export const validateString = (input) => {
-  const maxLength = 100;
+  const maxLength = 1000;
 
   for (let key in input) {
     if (input.hasOwnProperty(key)) {

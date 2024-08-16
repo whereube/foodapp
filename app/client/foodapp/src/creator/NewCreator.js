@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import './NewCreator.css'
+import { useNavigate } from "react-router-dom";
 
 const NewCreator = () => {
 
@@ -9,6 +10,7 @@ const NewCreator = () => {
         password: ''
     });
     const [status, setStatus] = useState(null);
+    const navigate = useNavigate(); 
 
 
     const handleChange = (e) =>{
@@ -59,6 +61,7 @@ const NewCreator = () => {
             email: '',
             password: ''
         });
+        navigate('/'); 
         } catch (error) {
         setStatus({ success: false, message: error.message });
     }

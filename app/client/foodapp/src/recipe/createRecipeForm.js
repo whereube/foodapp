@@ -150,6 +150,7 @@ const RecipeForm = () => {
     };
 
     try {
+      console.log(dataToSend)
       const response = await fetch('http://localhost:443/recipe/createRecipe', {
         method: 'POST',
         headers: {
@@ -160,20 +161,20 @@ const RecipeForm = () => {
 
       if (!response.ok) {
         throw new Error('Failed to create recipe');
+      } else {
+        const result = await response.json();
+        setStatus({ success: true, message: 'Recipe created successfully!' });
+        // Clear form fields
+        setFormData({
+          title: '',
+          description: '',
+          video_link: '',
+          nr_of_people: '', // Clear new field
+          creator_id: user.userId,
+          steps: [''], // Reset to one empty step
+          ingredients: [{ name: '', quantity: '', unit: '' }] // Reset to one empty ingredient
+        });
       }
-
-      const result = await response.json();
-      setStatus({ success: true, message: 'Recipe created successfully!' });
-      // Clear form fields
-      setFormData({
-        title: '',
-        description: '',
-        video_link: '',
-        nr_of_people: '', // Clear new field
-        creator_id: '',
-        steps: [''], // Reset to one empty step
-        ingredients: [{ name: '', quantity: '', unit: '' }] // Reset to one empty ingredient
-      });
     } catch (error) {
       setStatus({ success: false, message: error.message });
     }
