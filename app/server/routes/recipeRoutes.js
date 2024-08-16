@@ -12,6 +12,17 @@ export const getRecipeRoutes = () => {
     res.status(200).send(have);
   });
 
+
+  router.get('/getAllByCreatorId/:creatorId', async (req, res, next) => {
+    const creatorId  = req.params.creatorId; 
+    const have = await object.recipe.findAll({
+      where:{
+        creator_id: creatorId
+      }
+    });
+    res.status(200).send(have);
+  });
+
   router.get('/getByCreatorId', async (req, res, next) => {
     const { creator_id } = req.body; 
 

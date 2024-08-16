@@ -12,6 +12,16 @@ export const getCreatorRoutes = () => {
         res.status(200).send(creator);
     });
 
+    router.get('/getCreatorByUsername/:username', async (req, res, next) => {
+        const username  = req.params.username; 
+        const creator = await object.creator.findOne({
+            where:{
+                username: username
+            }
+        });
+        res.status(200).send(creator);
+    });
+
     router.post('/login', async (req, res, next) => {
         const { email, password } = req.body;
         const creator = await object.creator.findAll({

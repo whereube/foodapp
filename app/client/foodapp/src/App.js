@@ -1,9 +1,10 @@
 import './App.css';
-import CreatorPage from './creator/CreatorPage'
+import HomePage from './creator/homepage.js'
 import RecipeForm from './recipe/createRecipeForm.js';
 import ViewRecipe from './recipe/ViewRecipe.js';
 import NewCreator from './creator/NewCreator.js';
 import Login from './auth/Login.js';
+import CreatorPage from './creator/CreatorPage.js'
 import {AuthProvider, useAuth} from './auth/AuthProvider.js';
 import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
 
@@ -19,6 +20,9 @@ function App() {
                 element={<ViewRecipe/>}
               ></Route>
               <Route path="/" 
+                element={<HomePage />}
+              ></Route>
+              <Route path="/:creatorName" 
                 element={<CreatorPage />}
               ></Route>
               <Route path="/recipe/create"
