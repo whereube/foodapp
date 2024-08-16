@@ -1,14 +1,19 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import './createRecipeForm.css';
+import { useAuth } from '../auth/AuthProvider';
 
 const RecipeForm = () => {
+
+  //Gets user data
+  const { user } = useAuth();
+
   // State for form fields
   const [formData, setFormData] = useState({
     title: '',
     description: '',
     video_link: '',
     nr_of_people: '', // Initially set to an empty string
-    creator_id: '',
+    creator_id: user.userId,
     steps: [''], // Initialize with one empty string to show the first step
     ingredients: [{ name: '', quantity: '', unit: '' }] // Initialize with one ingredient
   });
@@ -179,19 +184,6 @@ const RecipeForm = () => {
       <div id="recipeForm">
         <h1>Create Recipe</h1>
         <form onSubmit={handleSubmit} className="recipeForm">
-          <div>
-            <label htmlFor="creator_id">Creator ID:</label>
-            <input
-              className="input-fields"
-              type="text"
-              id="creator_id"
-              name="creator_id"
-              value={formData.creator_id}
-              onChange={handleChange}
-              required
-            />
-          </div>
-
           <h3>Basic information</h3>
           <div>
             <label htmlFor="title">Title:</label>

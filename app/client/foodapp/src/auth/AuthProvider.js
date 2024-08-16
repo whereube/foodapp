@@ -14,7 +14,7 @@ export const AuthProvider = ({ children }) => {
             const storedUserId = localStorage.getItem("userId");
             if (storedUserId) {
                 // Optionally, fetch user details from API
-                setUser({ user_id: storedUserId }); // Example, replace with actual user fetch
+                setUser({ userId: storedUserId }); // Example, replace with actual user fetch
                 setToken(storedUserId)
             }
             setLoading(false); // Finished loading
