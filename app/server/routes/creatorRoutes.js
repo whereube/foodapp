@@ -1,7 +1,7 @@
 import { Router } from 'express';
 import * as object from '../models/objectIndex.js';
 import { v4 as uuidv4 } from 'uuid';
-
+import { hashPassword, checkPassword } from '../middleware/encrypt.js';
 
 export const getCreatorRoutes = () => {
   const router = Router();
@@ -24,16 +24,19 @@ export const getCreatorRoutes = () => {
 
     router.post('/login', async (req, res, next) => {
         const { email, password } = req.body;
-        const creator = await object.creator.findAll({
+
+        const creator = await object.creator.findOne({
             where: {
-                email: email,
-                password: password
+                email: email
             }
         });
-        if (creator.length !== 0){
-            res.status(200).send(creator);
-        } else {
+
+        const checkedPassword = await checkPassword(password, creator['dataValues']['password']);
+
+        if (!checkedPassword) {
             res.status(401).json('Login failed');
+        } else if (creator.length !== 0) {
+            res.status(200).send(creator);
         }
     });
 
@@ -52,6 +55,7 @@ export const getCreatorRoutes = () => {
         } = req.body;
         
         const id = uuidv4();
+        const hashedPassword = await hashPassword(password);
 
         const checkUsername = await object.creator.findAll({
             where: {
@@ -64,7 +68,7 @@ export const getCreatorRoutes = () => {
                 const result = await object.creator.create({
                     id,
                     username,
-                    password,
+                    password:hashedPassword,
                     email
                 });
                 
@@ -91,19 +95,21 @@ export const getCreatorRoutes = () => {
             password
         } = req.body;
 
+        const hashedPassword = await hashPassword(password);
+
         try{
             const creatorToUpdate = await object.creator.findByPk(creator_id);
 
             creatorToUpdate.set({
                 username: username,
                 email: email,
-                password: password
+                password: hashedPassword
             })
 
             await creatorToUpdate.save();
             res.status(200).json(creatorToUpdate);
         } catch (error) {
-            console.error('Error updating have', error);
+            console.error('Error updating creator', error);
             res.status(500).json({ message: 'Internal Server Error' });
         }  
 
@@ -123,13 +129,10 @@ export const getCreatorRoutes = () => {
             } 
             res.sendStatus(204);
         } catch (error) {
-        console.error('Error deleting have', error);
+        console.error('Error deleting creator', error);
         res.status(500).json('Internal Server Error');
         }
     });
 
-
-
-  
   return router;
 };

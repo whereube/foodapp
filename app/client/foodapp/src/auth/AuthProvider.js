@@ -40,11 +40,10 @@ export const AuthProvider = ({ children }) => {
                 throw new Error(errorData);
             } else {
                 const res = await response.json();
-                if (res && res[0].email === data.email) {
-                    setUser(res[0]);
-                    setToken(res[0].user_id);
-                    console.log(res[0].id)
-                    localStorage.setItem("userId", res[0].id);
+                if (res && res.email === data.email) {
+                    setUser(res);
+                    setToken(res.user_id);
+                    localStorage.setItem("userId", res.id);
                     return { success: true };
                 } else {
                     throw new Error(res.message);
