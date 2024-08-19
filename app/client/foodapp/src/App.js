@@ -7,7 +7,7 @@ import Login from './auth/Login.js';
 import CreatorPage from './creator/CreatorPage.js'
 import Banner from './creator/Banner.js';
 import {AuthProvider, useAuth} from './auth/AuthProvider.js';
-import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
+import { BrowserRouter, Routes, Route, Navigate, useLocation } from "react-router-dom";
 
 
 function App() {
@@ -18,7 +18,7 @@ function App() {
         <AuthProvider>
           <Routes>
               <Route path="/" element={<HomePage />}/>
-              <Route path="/:creatorName" element={<Banner />}>
+              <Route path="/:creatorName" element={<Banner/>}>
                 <Route path="" element={<CreatorPage />}/>
                 <Route path=":recipeId" element={<ViewRecipe/>}/>
               </Route>
@@ -39,10 +39,11 @@ function App() {
 
 function ProtectedRoute({ children }) {
   const { user } = useAuth();
+  const location = useLocation();
 
   if (!user) {
     // Redirect to login page if not authenticated
-    return <Navigate to="/login" />;
+    return <Navigate to="/login" state={{ from: location }}/>;
   }
 
   // If authenticated, return the children components

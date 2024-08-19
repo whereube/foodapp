@@ -1,0 +1,21 @@
+.dropdown-menu{
+    display: flex;
+    flex-direction: column;
+    flex-wrap: wrap;
+    max-width: 100%;
+}
+
+.profileMenu{
+    display: flex;
+    flex-direction: column;
+    width: 10%;
+    position: fixed;
+    right: 20px;
+    top: 20px;
+}
+
+
+#profileImage{
+    width: 30px;
+    height: 30px;
+}
