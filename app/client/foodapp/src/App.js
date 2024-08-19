@@ -18,7 +18,7 @@ function App() {
         <AuthProvider>
           <Routes>
               <Route path="/" element={<HomePage />}/>
-              <Route path="/:creatorName" element={<Banner />}>
+              <Route path="/:creatorName" element={<Banner/>}>
                 <Route path="" element={<CreatorPage />}/>
                 <Route path=":recipeId" element={<ViewRecipe/>}/>
               </Route>
