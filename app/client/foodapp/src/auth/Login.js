@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useAuth } from './AuthProvider';
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useLocation } from "react-router-dom";
 import './Login.css'
 
 
@@ -13,6 +13,8 @@ const Login = () => {
     const [status, setStatus] = useState(null);
     const auth = useAuth();
     const navigate = useNavigate();
+    const location = useLocation();
+    const from = location.state?.from?.pathname || "/";
 
 
     const handleChange = (e) =>{
@@ -34,7 +36,7 @@ const Login = () => {
     e.preventDefault();
         const result = await auth.loginAction(formData);
         if (result.success) {
-            navigate('/'); // Redirect on successful login
+            navigate(from, { replace: true });
         } else {
             setStatus({ success: false, message: result.message });
         }

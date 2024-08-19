@@ -7,7 +7,7 @@ import Login from './auth/Login.js';
 import CreatorPage from './creator/CreatorPage.js'
 import Banner from './creator/Banner.js';
 import {AuthProvider, useAuth} from './auth/AuthProvider.js';
-import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
+import { BrowserRouter, Routes, Route, Navigate, useLocation } from "react-router-dom";
 
 
 function App() {
@@ -39,10 +39,11 @@ function App() {
 
 function ProtectedRoute({ children }) {
   const { user } = useAuth();
+  const location = useLocation();
 
   if (!user) {
     // Redirect to login page if not authenticated
-    return <Navigate to="/login" />;
+    return <Navigate to="/login" state={{ from: location }}/>;
   }
 
   // If authenticated, return the children components
