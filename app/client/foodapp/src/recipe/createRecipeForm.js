@@ -25,8 +25,8 @@ const RecipeForm = () => {
   const [stepWarning, setStepWarning] = useState(null);
   const [ingredientWarning, setIngredientWarning] = useState(null);
 
-  const MAX_STEPS = 20;
-  const MAX_INGREDIENTS = 20;
+  const MAX_STEPS = 100;
+  const MAX_INGREDIENTS = 100;
 
   // Handle input change
   const handleChange = (e) => {
