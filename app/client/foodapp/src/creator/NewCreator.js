@@ -7,66 +7,63 @@ const NewCreator = () => {
     const [formData, setFormData] = useState({
         username: '',
         email: '',
-        password: ''
+        password: '',
+        confirmPassword: '' // New state for confirming password
     });
     const [status, setStatus] = useState(null);
     const navigate = useNavigate(); 
 
-
-    const handleChange = (e) =>{
-        if (e.target.name === "username"){
-            setFormData((prevData) => ({
-                ...prevData,
-                username: e.target.value
-            }));
-        }
-        if (e.target.name === "email"){
-            setFormData((prevData) => ({
-                ...prevData,
-                email: e.target.value
-            }));
-        }
-        if (e.target.name === "password"){
-            setFormData((prevData) => ({
-                ...prevData,
-                password: e.target.value
-            }));
-        }
+    const handleChange = (e) => {
+        const { name, value } = e.target;
+        setFormData((prevData) => ({
+            ...prevData,
+            [name]: value // Handle all changes with one function
+        }));
     }
 
-  const handleSubmit = async (e) => {
-    e.preventDefault();
+    const handleSubmit = async (e) => {
+        e.preventDefault();
 
-    try {
-        const response = await fetch('http://localhost:443/creator/add', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json' // Indicates that the body of the request contains JSON
-            },
-            body: JSON.stringify(formData) // Convert dataToSend to JSON string
-        });
-
-        if (!response.ok) {
-            const errorData = await response.json();
-            console.log(errorData)
-            console.error('Error:', errorData); 
-            throw new Error(errorData);
+        // Check if password and confirmPassword match
+        if (formData.password !== formData.confirmPassword) {
+            setStatus({ success: false, message: 'Passwords do not match' });
+            return;
         }
 
-        const result = await response.json();
-        setStatus({ success: true, message: 'Creator added successfully!' });
-        // Clear form fields
-        setFormData({
-            username: '',
-            email: '',
-            password: ''
-        });
-        navigate('/'); 
+        try {
+            const response = await fetch('http://localhost:443/creator/add', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({
+                    username: formData.username,
+                    email: formData.email,
+                    password: formData.password,
+                })
+            });
+
+            if (!response.ok) {
+                const errorData = await response.json();
+                console.log(errorData)
+                console.error('Error:', errorData); 
+                throw new Error(errorData);
+            }
+
+            const result = await response.json();
+            setStatus({ success: true, message: 'Creator added successfully!' });
+            // Clear form fields
+            setFormData({
+                username: '',
+                email: '',
+                password: '',
+                confirmPassword: ''
+            });
+            navigate('/'); 
         } catch (error) {
-        setStatus({ success: false, message: error.message });
-    }
-  };
-
+            setStatus({ success: false, message: error.message });
+        }
+    };
 
     return (
         <>
@@ -109,6 +106,18 @@ const NewCreator = () => {
                             required
                         />
                     </div>
+                    <div className='formDiv'>
+                        <label htmlFor="confirmPassword">Confirm Password</label> {/* New input field */}
+                        <input
+                            className="input-fields"
+                            type="password"
+                            id="confirmPassword"
+                            name="confirmPassword"
+                            value={formData.confirmPassword}
+                            onChange={handleChange}
+                            required
+                        />
+                    </div>
                     <button type="submit" className="button-small" role="button">
                         Create
                     </button>
@@ -127,4 +136,4 @@ const NewCreator = () => {
     )
 }
 
-export default NewCreator
+export default NewCreator;
