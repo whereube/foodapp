@@ -1,0 +1,10 @@
+.newCreatorInfo, .existingCreatorInfo{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-bottom: 40px;
+}
+
+.homepageButton{
+    max-width: 400px;
+}

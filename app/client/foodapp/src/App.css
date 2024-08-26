@@ -50,3 +50,8 @@ body {
     align-items: center;
     min-width: 80%;
 }
+
+
+.clickable{
+    cursor: pointer;
+}
