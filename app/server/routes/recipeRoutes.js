@@ -181,7 +181,7 @@ export const getRecipeRoutes = () => {
         }
         res.status(201).json({ message: 'Recipe created'});
       } catch (error) {
-        console.error('Error creating recipe', error);
+        console.error({ message: 'Error creating recipe', error });
         res.status(500).json('Internal Server Error');
       }
     } else {

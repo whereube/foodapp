@@ -59,7 +59,7 @@ const NewCreator = () => {
                 password: '',
                 confirmPassword: ''
             });
-            navigate('/'); 
+            navigate('/login'); 
         } catch (error) {
             setStatus({ success: false, message: error.message });
         }
