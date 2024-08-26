@@ -6,6 +6,7 @@ import NewCreator from './creator/NewCreator.js';
 import Login from './auth/Login.js';
 import CreatorPage from './creator/CreatorPage.js'
 import Banner from './creator/Banner.js';
+import UpdateRecipeForm from './recipe/UpdateRecipe.js';
 import {AuthProvider, useAuth} from './auth/AuthProvider.js';
 import { BrowserRouter, Routes, Route, Navigate, useLocation } from "react-router-dom";
 
@@ -18,9 +19,9 @@ function App() {
         <AuthProvider>
           <Routes>
               <Route path="/" element={<HomePage />}/>
-              <Route path="/:creatorName" element={<Banner/>}>
+              <Route path="/:creatorName" element={<Banner />}>
                 <Route path="" element={<CreatorPage />}/>
-                <Route path=":recipeId" element={<ViewRecipe/>}/>
+                <Route path=":recipeId" element={<ViewRecipe />}/>
               </Route>
               <Route path="/recipe/create" element={
                 <ProtectedRoute>
@@ -28,6 +29,7 @@ function App() {
                 </ProtectedRoute>
               }
               ></Route>
+              <Route path="/update/:recipeId" element={<UpdateRecipeForm />} />
               <Route path="/creator/new" element={<NewCreator />} />
               <Route path="/login" element={<Login />} />
           </Routes>

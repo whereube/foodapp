@@ -37,12 +37,17 @@ export const getRecipeRoutes = () => {
   });
 
   router.get('/getByRecipeId/:id', async (req, res, next) => {
+    console.log('RÄTT ROUTE:');
+
     const id  = req.params.id; 
+
     const validate = validateInput({ id });
     if (validate.valid) {
       try {
         const result = await object.recipe.findOne({ where: {id: id} });
 
+
+        console.log(result);
         if (!result) {
           return res.status(404).json({ message: 'Recipe not found' });
         }
