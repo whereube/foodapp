@@ -1,3 +1,8 @@
+.homePage{
+    margin-top: 40px;
+    text-align: center;
+}
+
 .newCreatorInfo, .existingCreatorInfo{
     display: flex;
     flex-direction: column;
