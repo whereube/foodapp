@@ -1,0 +1,14 @@
+.navBar{
+    background-color: black;    
+    width: 100%;
+    position: fixed;
+}
+
+.textDiv{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+    width: 70%;
+    background-color: black;
+    color: white;
+}

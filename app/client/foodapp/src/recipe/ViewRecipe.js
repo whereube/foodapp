@@ -48,8 +48,10 @@ const ViewRecipe = (props) => {
 
 
     const decreaseServingSize = () => {
-        const newServingSize = currentServingSize - 1
-        setCurrentServingSize(newServingSize)
+        if(currentServingSize > 1){
+            const newServingSize = currentServingSize - 1
+            setCurrentServingSize(newServingSize)
+        }
     }
 
     const copyIngredientsToList = async () => {
@@ -85,9 +87,9 @@ const ViewRecipe = (props) => {
                 <div className='ingredients'>
                     <h4>Ingredients</h4>
                     <div className='servingSize'>
-                        <button className='button-small' onClick={increaseServingSize}>+</button>
-                        <p>{currentServingSize}</p>
                         <button className='button-small' onClick={decreaseServingSize}>-</button>
+                        <p>{currentServingSize}</p>
+                        <button className='button-small' onClick={increaseServingSize}>+</button>
                         <img id="utensilsIcon" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADIAAAAyCAYAAAAeP4ixAAAACXBIWXMAAAsTAAALEwEAmpwYAAACcElEQVR4nO2az4tOURjHPyTSzIsFU0xEVsiGGEmUzZRkLbaslY2ZEDss5B8Y5cdG7NiIqPGaKGxkQn7tZEpi/Cgxjo6+V7fj3um9955z75jOp269557n+T7v033uvec87wtwGzANHW3+ZRh4UOa8afhwMWXP5xmEJibiEK+IL2JpOcTS8kUsLYdYWr6IpeUQS8sX07602sCdAuenbCJFmX6JfNGHLuqjWzE/+0zkjT6soD5WKuarijrzpDNuB/c02Ep9bFPMkYo626XzyA7OaHCU+jimmKcr6lxLf/edGmQ92kJxVzF3VNAYlMYYsCC58T4Cv4A1hGetYn0o8YDpVjklV+Kbxn85pYlzhOeiYp0o6DfitJFeAptdo15l9zNr0iNbFOMrsLigr9FxCdgLzM4zPJjK1F5C37T0uLUxDoR8gc7UDW+NbwJz8YfVuiXtYcUKuhJYCIzK4bpeOFWZD9yQ5qhi1LKk6QWep968fZRnE/BaWs+AJXWvzVrAFTlOAJeBVQX8VwMXgB/SuJo865tYZM4A9gNvUwndBw4DyzPs7bkjspmQj/XdJ63GV8tdwIBKIxF7l2E3lpp/ChzyvKI2Prcb6zvYcq7zFczB+76p6J46dNzSxEQqYuIVySGWVkVMLK0cYmlNpdJqSexTxtx44Eaf8ZnIRok9zph7orkN/AeJnJfYyYy50A0M4yORWcDxVHtyaYbNMvVyjWytT+OJzAF61PUYTC3h7UZp9yR+e9QlSXaEA9JYJM1aE2k7/aPkeAH0d+Dfr05Mp//PCprId+A98BAYAnZN1kfKwNpan7PSsFpWs0pbNu8Xqz/8BoaOzSgHDW7SAAAAAElFTkSuQmCC"></img>
                     </div>
                     {Array.isArray(ingredient) && ingredient.length > 0 ? (

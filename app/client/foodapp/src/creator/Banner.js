@@ -12,7 +12,7 @@ const Banner = () => {
   return (
     <>
         <div className='banner'>
-            <h1>{creatorName}'s Page</h1>
+            <h1>{creatorName}</h1>
             <ProfileMenu/>
         </div>
         <Outlet />
